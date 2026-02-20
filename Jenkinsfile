@@ -17,7 +17,6 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                bat 'venv\\Scripts\\pip install --upgrade pip'
                 bat 'venv\\Scripts\\pip install -r requirements.txt'
             }
         }
@@ -30,7 +29,10 @@ pipeline {
 
         stage('Run Tests') {
             steps {
-                bat 'venv\\Scripts\\python manage.py test'
+                bat '''
+                set DJANGO_SETTINGS_MODULE=StudentPortal.settings
+                venv\\Scripts\\python manage.py test
+                '''
             }
         }
     }
